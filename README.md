@@ -121,8 +121,3 @@ Also a second-order method, but with different error characteristics.
 2. **Odd functions**: Set k=1 to see cancellation
 3. **Narrow peaks**: Decrease b to make sharper peaks
 4. **Compare methods**: Notice when rectangle vs trapezoidal differs
-
-## License
-
-Copyright 1997, Princeton University.
-Based on original work by Robert Vanderbei.
