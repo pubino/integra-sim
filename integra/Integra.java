@@ -2,14 +2,13 @@ package integra;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.applet.*;
 import java.awt.image.*;
 import java.util.*;
 import java.io.*;
-import java.net.*;
+
 import myutil.*;
 
-public class Integra extends Applet implements ActionListener
+public class Integra extends Panel implements ActionListener, SimApp
 {
 	TextField LOX;
 	TextField HIX;
@@ -57,6 +56,10 @@ public class Integra extends Applet implements ActionListener
 	    ic.setSize(300,300);
 	    validate();
 	    setVisible(true);
+	}
+
+	public void start() {
+		// No-op for this simulation
 	}
 
         public void actionPerformed(ActionEvent e)
