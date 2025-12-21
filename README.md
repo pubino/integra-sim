@@ -1,5 +1,7 @@
 # Integration Simulator
 
+Part of [Vanderbei's Java Simulations](https://github.com/pubino/vanderbei-apps) collection.
+
 An interactive Java application for visualizing numerical integration methods by Professor Robert Vanderbei, Princeton University (1997).
 
 ## Overview
