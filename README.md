@@ -1,6 +1,6 @@
 # Integration Simulator
 
-An interactive Java application for visualizing numerical integration methods. Originally developed by Robert Vanderbei at Princeton University (1997).
+An interactive Java application for visualizing numerical integration methods by Professor Robert Vanderbei, Princeton University (1997).
 
 ## Overview
 
