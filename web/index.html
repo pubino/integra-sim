@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Compare midpoint rectangles and trapezoids for numerical integration.">
+  <title>Numerical Integration</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow"><a href="https://pubino.github.io/vanderbei-apps/#integra-sim">Vanderbei’s applications</a> · Princeton University</p>
+      <h1>Numerical Integration</h1>
+      <p class="intro">Compare midpoint rectangles and trapezoids. Change the interval or the number of panels to see how each method approximates the signed area.</p>
+    </header>
+
+    <section class="panel" aria-labelledby="simulation-heading">
+      <h2 id="simulation-heading">Compare approximations</h2>
+      <div class="viewer">
+        <div class="sky">
+          <div class="sky-frame">
+            <canvas id="plot" width="740" height="540" role="img" aria-label="Function curve and numerical integration panels"></canvas>
+            <span id="loading" class="loading">Loading Python…</span>
+          </div>
+          <ul class="plot-legend" aria-label="Plot colors">
+            <li><span class="swatch curve"></span> Function</li>
+            <li><span class="swatch rectangles"></span> Midpoint rectangles</li>
+            <li><span class="swatch trapezoids"></span> Trapezoids</li>
+          </ul>
+          <dl class="facts">
+            <div><dt>Midpoint rule</dt><dd id="midpoint">—</dd></div>
+            <div><dt>Trapezoidal rule</dt><dd id="trapezoid">—</dd></div>
+          </dl>
+        </div>
+
+        <form id="settings" class="controls">
+          <p class="formula" aria-label="f of x equals a times x to the k times e to the negative x squared over b">f(x) = a x<sup>k</sup> e<sup>−x²/b</sup></p>
+          <fieldset id="inputs" disabled>
+            <legend class="sr-only">Integration parameters</legend>
+            <div class="form-grid">
+              <label class="field">Start x<input type="number" step="any" value="-3" required></label>
+              <label class="field">End x<input type="number" step="any" value="3" required></label>
+              <label class="field full-width">Panels<input type="number" step="1" min="1" max="1000" value="10" required></label>
+              <label class="field">Coefficient a<input type="number" step="any" value="1" required></label>
+              <label class="field">Scale b<input type="number" step="any" value="2" required></label>
+              <label class="field">Exponent k<input type="number" step="1" min="-1000" max="1000" value="0" required></label>
+            </div>
+          </fieldset>
+          <label class="field">Show on plot
+            <select id="layers">
+              <option value="both">Both methods</option>
+              <option value="rectangles">Midpoint rectangles</option>
+              <option value="trapezoids">Trapezoids</option>
+            </select>
+          </label>
+          <div class="actions">
+            <button id="integrate" disabled>Integrate</button>
+          </div>
+          <p id="status" class="hint" role="status">Loading the calculation engine…</p>
+          <p id="error" role="alert" hidden></p>
+          <button id="retry" type="button" class="secondary" hidden>Reload calculator</button>
+        </form>
+      </div>
+    </section>
+
+    <footer>
+      <p>Based on Robert Vanderbei’s Integration Simulator. Python runs in your browser via
+        <a href="https://pyodide.org/">Pyodide</a>. <a href="https://github.com/pubino/integra-sim">Source on GitHub</a>.</p>
+    </footer>
+    <noscript><p>Enable JavaScript to run Python in your browser.</p></noscript>
+  </main>
+</body>
+</html>

@@ -1,5 +1,12 @@
 # Integration Simulator
 
+[Run in your browser](https://pubino.github.io/integra-sim/).
+
+The browser ports the original function, midpoint rectangle rule, and trapezoidal rule to Python.
+Set the parameters and select **Integrate**. Use **Show on plot** to compare the methods together
+or inspect either on its own. The interval can run in either direction, and the results are signed.
+The browser accepts 1 to 1,000 panels.
+
 Part of [Prof. Robert Vanderbei's Java Applications](https://pubino.github.io/vanderbei-apps#integra-sim).
 
 An interactive Java application for visualizing numerical integration methods by Professor Robert Vanderbei, Princeton University (1997).
@@ -123,3 +130,22 @@ Also a second-order method, but with different error characteristics.
 2. **Odd functions**: Set k=1 to see cancellation
 3. **Narrow peaks**: Decrease b to make sharper peaks
 4. **Compare methods**: Notice when rectangle vs trapezoidal differs
+
+## Browser development
+
+Preview the static page locally using Docker or Python 3.13 with uv.
+
+```sh
+docker-compose up --build preview
+# Or build and serve directly
+uv sync --locked
+uv run python scripts/build_site.py
+uv run python -m http.server 8000 --bind 127.0.0.1 --directory build/site
+```
+
+Run the Java parity tests, Chromium tests, and lint and type checks used in CI.
+
+```sh
+docker-compose run --build --rm -T js-check
+docker-compose run --build --rm -T test
+```
