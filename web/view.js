@@ -16,6 +16,14 @@ export function formatNumber(n, precision) {
 export function draw(canvas, [, , curve, edges, heights], layers) {
   const context = canvas.getContext("2d");
   if (!context) return;
+  const { width, height } = canvas.getBoundingClientRect();
+  if (width === 0 || height === 0) return;
+  const backingWidth = Math.round(width * devicePixelRatio);
+  const backingHeight = Math.round(height * devicePixelRatio);
+  if (canvas.width !== backingWidth) canvas.width = backingWidth;
+  if (canvas.height !== backingHeight) canvas.height = backingHeight;
+  context.setTransform(backingWidth / width, 0, 0, backingHeight / height, 0, 0);
+
   const horizontal = [edges[0][0], edges[edges.length - 1][0]];
   const xMin = Math.min(...horizontal);
   const xMax = Math.max(...horizontal);
@@ -23,17 +31,17 @@ export function draw(canvas, [, , curve, edges, heights], layers) {
   const magnitude = Math.max(1e-300, Math.abs(Math.min(...values)), Math.abs(Math.max(...values)));
   const yMin = Math.min(...values, 0) / magnitude;
   const yMax = Math.max(...values, 0) / magnitude;
-  const xPadding = 56;
-  const yPadding = 42;
-  const w = canvas.width - 2 * xPadding;
-  const h = canvas.height - 2 * yPadding;
+  const xPadding = Math.min(42, width / 4);
+  const yPadding = Math.min(30, height / 4);
+  const w = width - 2 * xPadding;
+  const h = height - 2 * yPadding;
   /** @param {number} value */
   const xPixel = value => xPadding + (xMax === xMin ? 0.5 : (value - xMin) / (xMax - xMin)) * w;
   /** @param {number} value */
   const yPixel = value => yPadding + (yMax === yMin ? 0.5 : (yMax - value / magnitude) / (yMax - yMin)) * h;
 
   context.fillStyle = "#000";
-  context.fillRect(0, 0, canvas.width, canvas.height);
+  context.fillRect(0, 0, width, height);
   context.lineWidth = 1;
   context.strokeStyle = "#334257";
   context.beginPath();
@@ -81,14 +89,14 @@ export function draw(canvas, [, , curve, edges, heights], layers) {
   context.strokeStyle = "#79baff";
   context.stroke();
 
-  context.font = "14px system-ui, sans-serif";
+  context.font = "12px system-ui, sans-serif";
   context.fillStyle = "#c6d4df";
   context.textAlign = "center";
   const xTicks = xMin === xMax ? [xMin] : [xMin, xMin + (xMax - xMin) / 2, xMax];
   for (const tick of xTicks) {
-    context.fillText(formatNumber(tick, 2), xPixel(tick), canvas.height - 14);
+    context.fillText(formatNumber(tick, 2), xPixel(tick), height - 10);
   }
   context.textAlign = "left";
-  context.fillText(formatNumber(yMax * magnitude, 2), 8, 22);
-  if (yMin !== yMax) context.fillText(formatNumber(yMin * magnitude, 2), 8, canvas.height - 14);
+  context.fillText(formatNumber(yMax * magnitude, 2), 8, 18);
+  if (yMin !== yMax) context.fillText(formatNumber(yMin * magnitude, 2), 8, height - yPadding + 5);
 }

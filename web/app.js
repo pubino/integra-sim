@@ -81,7 +81,7 @@ worker.onmessage = (/** @type {MessageEvent<import("./protocol").Reply>} */ { da
     return;
   }
   lastResult = data.result;
-  draw(canvas, lastResult, layers.value);
+  redraw();
   midpoint.textContent = formatNumber(lastResult[0], 6);
   trapezoid.textContent = formatNumber(lastResult[1], 6);
   status.textContent = "Calculated.";
@@ -91,7 +91,10 @@ find("settings", HTMLFormElement).addEventListener("submit", (event) => {
   event.preventDefault();
   calculate();
 });
-layers.addEventListener("change", () => {
+function redraw() {
   if (lastResult) draw(canvas, lastResult, layers.value);
-});
+}
+
+layers.addEventListener("change", redraw);
+new ResizeObserver(redraw).observe(canvas);
 retry.addEventListener("click", () => window.location.reload());

@@ -81,6 +81,11 @@ class BrowserTest(unittest.TestCase):
         expect(self.page.get_by_role("alert")).to_be_hidden()
         expect(self.page.get_by_role("status")).to_have_text("Calculated.")
         self.page.set_viewport_size({"width": 390, "height": 844})
+        self.page.wait_for_function("""() => {
+            const plot = document.querySelector("#plot");
+            const width = plot.getBoundingClientRect().width;
+            return plot.width === Math.round(width * devicePixelRatio);
+        }""")
         self.assertTrue(
             self.page.evaluate("document.documentElement.scrollWidth <= innerWidth")
         )
